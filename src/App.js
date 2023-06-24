@@ -95,7 +95,7 @@ function reducer(state, { type, payload }) {
             overwrite: true,
             previousOperand: null,
             operation: null,
-            currentOperand: "Cannot div zero",
+            currentOperand: "Cannot divide by zero",
           };
         }
         if (state.operation ==  null || state.currentOperand == null || state.previousOperand == null){
@@ -129,10 +129,6 @@ function evaluate({ currentOperand, previousOperand, operation }) {
       computation = prev * current;
       break;
     case "÷":
-      // if (current === 0){
-      //   computation= "Cannot divide by zero"
-      //   return computation
-      // }
       computation = prev / current;
       break;
   }
@@ -162,10 +158,10 @@ function formatOperand(operand) {
 
 
 function App() {
-  const [{ currentOperand, previousOperand, operation }, dispatch] = useReducer(
-    reducer,
-    {}
-  );
+  const [
+    { currentOperand, previousOperand, operation },
+    dispatch,
+  ] = useReducer(reducer, {});
 
   return (
     <div className="calculator-grid">
@@ -184,19 +180,19 @@ function App() {
         AC
       </button>
       <button onClick={() => dispatch({ type: ACTIONS.DELETE_DIGIT })}>DEL</button>
-      <OperationButton operation="÷" dispatch={dispatch} />
+      <OperationButton operation="÷" dispatch={dispatch} disabled={currentOperand} />
       <DigitButton digit="1" dispatch={dispatch} />
       <DigitButton digit="2" dispatch={dispatch} />
       <DigitButton digit="3" dispatch={dispatch} />
-      <OperationButton operation="*" dispatch={dispatch} />
+      <OperationButton operation="*" dispatch={dispatch} disabled={currentOperand} />
       <DigitButton digit="4" dispatch={dispatch} />
       <DigitButton digit="5" dispatch={dispatch} />
       <DigitButton digit="6" dispatch={dispatch} />
-      <OperationButton operation="+" dispatch={dispatch} />
+      <OperationButton operation="+" dispatch={dispatch} disabled={currentOperand}/>
       <DigitButton digit="7" dispatch={dispatch} />
       <DigitButton digit="8" dispatch={dispatch} />
       <DigitButton digit="9" dispatch={dispatch} />
-      <OperationButton operation="-" dispatch={dispatch} />
+      <OperationButton operation="-" dispatch={dispatch} disabled={currentOperand}/>
       <DigitButton digit="." dispatch={dispatch} />
       <DigitButton digit="0" dispatch={dispatch} />
       <button className="span-two"  onClick={() => dispatch({ type: ACTIONS.EVALUATE })}>=</button>
